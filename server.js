@@ -4,7 +4,16 @@ const cors = require("cors");
 
 const app = express();
 
-app.use(cors());
+const allowedOrigins = [
+  "https://spmb-new.smktibazma.sch.id",
+  "https://backend_spmb.smktibazma.sch.id",
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
+
 app.use(express.json());
 
 app.use("/api/auth", require("./routes/authRoutes"));
