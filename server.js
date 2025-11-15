@@ -16,5 +16,10 @@ app.get("/", (req, res) => {
   res.send("API berjalan...");
 });
 
-const PORT = 5000;
-app.listen(PORT, () => console.log(`Server berjalan di port ${PORT}`));
+const PORT = 3000;
+const HOST = "0.0.0.0";
+
+app.listen(PORT, HOST, () => {
+  console.log(`Server berjalan di http://${HOST}:${PORT}`);
+});
+
