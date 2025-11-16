@@ -25,6 +25,15 @@ app.use("/api/pendaftaran", require("./routes/pendaftaranRoutes"));
 
 // STATIC UPLOADS (FIXED)
 // Ganti ini:
+// Middleware untuk logging static files
+app.use("/uploads", (req, res, next) => {
+  const filePath = path.join(__dirname, "uploads", req.path);
+  console.log('Request file:', req.path);
+  console.log('Full path:', filePath);
+  console.log('File exists:', fs.existsSync(filePath));
+  next();
+});
+
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Menjadi:
