@@ -40,7 +40,7 @@ exports.deleteNotifikasi = (req, res) => {
 exports.getNotifikasiByUser = (req, res) => {
   const user_id = req.params.user_id;
 
-  if (!users_id) {
+  if (!user_id) {
     return res.status(400).json({ message: "users_id wajib dikirim!" });
   }
 
