@@ -75,15 +75,14 @@ exports.loginAdmin = (req, res) => {
 
     const admin = result[0];
 
-    // Bandingkan password input dengan hash di DB
-    const validPass = bcrypt.compareSync(password, admin.password);
-    if (!validPass)
+    // ❌ Tidak pakai hash, kita cek langsung plaintext
+    if (password !== admin.password)
       return res.status(400).json({ message: 'Password salah!' });
 
-    // Generate JWT admin 
+    // Generate token admin
     const token = jwt.sign(
       { id: admin.id, email: admin.email, role: admin.role },
-      process.env.ADMIN_SECRET_KEY,
+      'ADMIN_SECRET_KEY_GANTI_YA',
       { expiresIn: '7d' }
     );
 
