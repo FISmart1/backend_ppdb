@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const upload = require("../config/multer");
 const controller = require("../controllers/pendaftaranController");
-const update = require("../controllers/updatePendaftaran")
+const update = require("../controllers/updatePendaftaran");
+const { authPlugins } = require("mysql2");
 
 router.post("/form-pribadi", controller.simpanFormPribadi);
 router.post("/form-prestasi", controller.simpanFormPrestasi);
@@ -69,5 +70,6 @@ router.put(
 );
 
 router.put("/form-aturan/:user_id", update.updateFormAturan)
+router.patch("/validasi", update.updateValidasiPendaftaran)
 
 module.exports = router;

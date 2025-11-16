@@ -227,3 +227,43 @@ exports.updateFormAturan = (req, res) => {
     res.json({ message: "Pernyataan berhasil diperbarui!" });
   });
 };
+
+// controllers/validasiController.js
+
+exports.updateValidasiPendaftaran = (req, res) => {
+  const user_id = req.body.user_id;
+  const { validasi_pendaftaran } = req.body;
+
+  // Validasi input
+  if (!user_id) {
+    return res.status(400).json({ message: "User ID diperlukan!" });
+  }
+
+  if (!validasi_pendaftaran || !['belum', 'pending', 'sudah'].includes(validasi_pendaftaran)) {
+    return res.status(400).json({ message: "Status validasi harus: belum, pending, atau sudah!" });
+  }
+
+  const sql = `
+    UPDATE users SET validasi_pendaftaran = ?
+    WHERE id = ?
+  `;
+
+  db.query(sql, [validasi_pendaftaran, user_id], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Gagal update validasi pendaftaran!" });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "User tidak ditemukan!" });
+    }
+
+    res.json({ 
+      message: "Validasi pendaftaran berhasil diperbarui!",
+      data: {
+        user_id: user_id,
+        validasi_pendaftaran: validasi_pendaftaran
+      }
+    });
+  });
+};
