@@ -75,15 +75,15 @@ exports.loginAdmin = (req, res) => {
 
     const admin = result[0];
 
-    // Cek password admin
+    // Bandingkan password input dengan hash di DB
     const validPass = bcrypt.compareSync(password, admin.password);
     if (!validPass)
       return res.status(400).json({ message: 'Password salah!' });
 
-    // Generate JWT khusus admin
+    // Generate JWT admin 
     const token = jwt.sign(
       { id: admin.id, email: admin.email, role: admin.role },
-      'ADMIN_SECRET_KEY_GANTI_YA',
+      process.env.ADMIN_SECRET_KEY,
       { expiresIn: '7d' }
     );
 
@@ -99,4 +99,3 @@ exports.loginAdmin = (req, res) => {
     });
   });
 };
-
