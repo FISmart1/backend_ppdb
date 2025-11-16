@@ -22,6 +22,7 @@ app.use("/api/pendaftaran", require("./routes/pendaftaranRoutes"));
 app.use("/uploads", express.static("uploads"));
 app.use("/api/pengumuman", require("./routes/pengumumanRoutes"))
 app.use("/notifikasi", require("./routes/notifRoutes"))
+app.use("/api/auth", authRoutes), require("./routes/authReset")
 
 app.get("/", (req, res) => {
   res.send("API berjalan...");

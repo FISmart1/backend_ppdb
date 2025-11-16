@@ -1,14 +1,14 @@
 const db = require("../db");
 
 exports.postNotifikasi = (req, res) => {
-  const { users_id, title, message } = req.body;
+  const { user_id, title, message } = req.body;
 
-  if (!users_id || !message) {
+  if (!user_id || !message) {
     return res.status(400).json({ message: "users_id dan message wajib dikirim!" });
   }
 
-  const sql = `INSERT INTO notifikasi (users_id, title, message) VALUES (?, ?, ?)`;
-  const values = [users_id, title ?? null, message];
+  const sql = `INSERT INTO notifikasi (user_id, title, message) VALUES (?, ?, ?)`;
+  const values = [user_id, title ?? null, message];
 
   db.query(sql, values, (err, result) => {
     if (err) return res.status(500).json({ message: "Gagal menambahkan notifikasi", error: err });
