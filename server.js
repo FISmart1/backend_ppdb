@@ -1,7 +1,7 @@
 // server.js
 const express = require("express");
 const cors = require("cors");
-const path = require('path');
+const path = require("path");
 const app = express();
 
 const allowedOrigins = [
@@ -17,12 +17,15 @@ app.use(cors({
 
 app.use(express.json());
 
+// API routes
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/pendaftaran", require("./routes/pendaftaranRoutes"));
-app.use("/uploads", express.static("uploads"));
-app.use("/api/pengumuman", require("./routes/pengumumanRoutes"))
-app.use("/notifikasi", require("./routes/notifRoutes"))
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// STATIC UPLOADS (FIXED)
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+app.use("/api/pengumuman", require("./routes/pengumumanRoutes"));
+app.use("/notifikasi", require("./routes/notifRoutes"));
 
 app.get("/", (req, res) => {
   res.send("API berjalan...");
@@ -34,4 +37,3 @@ const HOST = "0.0.0.0";
 app.listen(PORT, HOST, () => {
   console.log(`Server berjalan di http://${HOST}:${PORT}`);
 });
-
