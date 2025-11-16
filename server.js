@@ -2,6 +2,7 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const fs = require("fs"); // Jangan lupa import fs
 const app = express();
 
 const allowedOrigins = [
@@ -19,38 +20,77 @@ app.use(express.json());
 console.log("SERVER PATH:", __dirname);
 console.log("UPLOADS PATH:", path.join(__dirname, "uploads"));
 
+// Pastikan folder uploads exists
+const uploadsDir = path.join(__dirname, "uploads");
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+  console.log("Folder uploads dibuat");
+}
+
 // API routes
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/pendaftaran", require("./routes/pendaftaranRoutes"));
 
-// STATIC UPLOADS (FIXED)
-// Ganti ini:
+// ✅ STATIC UPLOADS - VERSION 1 (RECOMMENDED)
 // Middleware untuk logging static files
 app.use("/uploads", (req, res, next) => {
   const filePath = path.join(__dirname, "uploads", req.path);
-  console.log('Request file:', req.path);
-  console.log('Full path:', filePath);
-  console.log('File exists:', fs.existsSync(filePath));
+  console.log('📁 Request file:', req.path);
+  console.log('📍 Full path:', filePath);
+  console.log('✅ File exists:', fs.existsSync(filePath));
   next();
 });
 
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
-// Menjadi:
+// Static files configuration
 app.use("/uploads", express.static(path.join(__dirname, "uploads"), {
-  fallthrough: true,
-  index: false
+  fallthrough: false,
+  index: false,
+  dotfiles: 'deny'
 }));
 
-// Tambahkan error handling
-app.use("/uploads", (err, req, res, next) => {
-  if (err) {
-    console.log('Error accessing file:', req.path);
-    return res.status(404).send('File tidak ditemukan');
-  }
-  next();
+// ✅ ATAU VERSION 2 (LEBIH SIMPLE)
+// Hapus yang di atas dan gunakan yang ini saja:
+/*
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+*/
+
+// ✅ HANDLE FILE NOT FOUND
+app.use("/uploads", (req, res) => {
+  console.log('❌ File tidak ditemukan:', req.path);
+  res.status(404).json({
+    error: "File tidak ditemukan",
+    message: `File ${req.path} tidak ada di server`,
+    path: req.path
+  });
 });
 
+// ✅ ROUTE KHUSUS UNTUK CEK FILE
+app.get("/check-file/:filename", (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(__dirname, "uploads", filename);
+  
+  if (fs.existsSync(filePath)) {
+    const stats = fs.statSync(filePath);
+    res.json({
+      exists: true,
+      filename: filename,
+      path: filePath,
+      size: stats.size,
+      created: stats.birthtime
+    });
+  } else {
+    // List files yang ada di uploads
+    const files = fs.readdirSync(uploadsDir);
+    res.status(404).json({
+      exists: false,
+      filename: filename,
+      searchedPath: filePath,
+      availableFiles: files
+    });
+  }
+});
+
+// Route lainnya
 app.use("/api/pengumuman", require("./routes/pengumumanRoutes"));
 app.use("/notifikasi", require("./routes/notifRoutes"));
 
