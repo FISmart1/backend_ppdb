@@ -59,3 +59,44 @@ exports.login = (req, res) => {
     });
   });
 };
+
+exports.loginAdmin = (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password)
+    return res.status(400).json({ message: 'Email dan password wajib!' });
+
+  const adminQuery = 'SELECT * FROM admins WHERE email = ?';
+  db.query(adminQuery, [email], (err, result) => {
+    if (err) return res.status(500).json({ message: 'Server error', err });
+
+    if (result.length === 0)
+      return res.status(400).json({ message: 'Email admin tidak ditemukan!' });
+
+    const admin = result[0];
+
+    // Cek password admin
+    const validPass = bcrypt.compareSync(password, admin.password);
+    if (!validPass)
+      return res.status(400).json({ message: 'Password salah!' });
+
+    // Generate JWT khusus admin
+    const token = jwt.sign(
+      { id: admin.id, email: admin.email, role: admin.role },
+      'ADMIN_SECRET_KEY_GANTI_YA',
+      { expiresIn: '7d' }
+    );
+
+    return res.status(200).json({
+      message: 'Login admin berhasil!',
+      token,
+      admin: {
+        id: admin.id,
+        name: admin.name,
+        email: admin.email,
+        role: admin.role,
+      },
+    });
+  });
+};
+

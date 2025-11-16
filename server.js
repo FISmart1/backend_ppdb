@@ -7,6 +7,7 @@ const app = express();
 const allowedOrigins = [
   "https://spmb-new.smktibazma.sch.id",
   "https://backend_spmb.smktibazma.sch.id",
+  "http://localhost:3000"
 ];
 
 app.use(cors({
