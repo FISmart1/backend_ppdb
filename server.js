@@ -1,7 +1,7 @@
 // server.js
 const express = require("express");
 const cors = require("cors");
-
+const path = require('path');
 const app = express();
 
 const allowedOrigins = [
@@ -22,7 +22,7 @@ app.use("/api/pendaftaran", require("./routes/pendaftaranRoutes"));
 app.use("/uploads", express.static("uploads"));
 app.use("/api/pengumuman", require("./routes/pengumumanRoutes"))
 app.use("/notifikasi", require("./routes/notifRoutes"))
-
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.get("/", (req, res) => {
   res.send("API berjalan...");
