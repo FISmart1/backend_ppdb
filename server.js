@@ -5,7 +5,7 @@ const cors = require("cors");
 const app = express();
 
 const allowedOrigins = [
-  "https://spmb.smktibazma.sch.id",
+  "https://spmb-new.smktibazma.sch.id",
   "https://backend_spmb.smktibazma.sch.id",
 ];
 
