@@ -16,6 +16,8 @@ app.use(cors({
 }));
 
 app.use(express.json());
+console.log("SERVER PATH:", __dirname);
+console.log("UPLOADS PATH:", path.join(__dirname, "uploads"));
 
 // API routes
 app.use("/api/auth", require("./routes/authRoutes"));
