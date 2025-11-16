@@ -38,7 +38,7 @@ exports.deleteNotifikasi = (req, res) => {
 
 // GET - Ambil notifikasi berdasarkan users_id
 exports.getNotifikasiByUser = (req, res) => {
-  const users_id = req.params.users_id;
+  const user_id = req.params.user_id;
 
   if (!users_id) {
     return res.status(400).json({ message: "users_id wajib dikirim!" });
@@ -47,11 +47,11 @@ exports.getNotifikasiByUser = (req, res) => {
   const sql = `
     SELECT *
     FROM notifikasi
-    WHERE users_id = ?
+    WHERE user_id = ?
     ORDER BY created_at DESC
   `;
 
-  db.query(sql, [users_id], (err, results) => {
+  db.query(sql, [user_id], (err, results) => {
     if (err) {
       console.error("Error:", err);
       return res.status(500).json({ message: "Gagal mengambil notifikasi user" });
