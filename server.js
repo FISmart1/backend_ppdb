@@ -24,7 +24,23 @@ app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/pendaftaran", require("./routes/pendaftaranRoutes"));
 
 // STATIC UPLOADS (FIXED)
+// Ganti ini:
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// Menjadi:
+app.use("/uploads", express.static(path.join(__dirname, "uploads"), {
+  fallthrough: true,
+  index: false
+}));
+
+// Tambahkan error handling
+app.use("/uploads", (err, req, res, next) => {
+  if (err) {
+    console.log('Error accessing file:', req.path);
+    return res.status(404).send('File tidak ditemukan');
+  }
+  next();
+});
 
 app.use("/api/pengumuman", require("./routes/pengumumanRoutes"));
 app.use("/notifikasi", require("./routes/notifRoutes"));
