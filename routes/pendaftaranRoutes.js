@@ -41,6 +41,7 @@ router.get("/form-kesehatan/:user_id", controller.getFormKesehatan);
 router.get("/form-aturan/:user_id", controller.getFormAturan);
 router.get("/user/:id/full", controller.getFullPendaftaranUser);
 router.get("/user/:id/is-complete", controller.getComplete);
+router.get("/user/full", controller.getFullPendaftaranAll);
 
 router.put("/form-pribadi/:user_id", update.updateFormPribadi)
 router.put("/form-prestasi/:user_id", update.updateFormPrestasi)

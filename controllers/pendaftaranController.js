@@ -634,3 +634,65 @@ exports.updatePengumuman = (req, res) => {
     }
   );
 };
+
+exports.getFullPendaftaranAll = (req, res) => {
+  const queryUsers = "SELECT * FROM users";
+
+  db.query(queryUsers, (err, users) => {
+    if (err) {
+      return res.status(500).json({ message: "Gagal mengambil users", err });
+    }
+
+    // Jika tidak ada user
+    if (users.length === 0) {
+      return res.json({ message: "Tidak ada user", data: [] });
+    }
+
+    let finalData = [];
+    let completedUsers = 0;
+
+    users.forEach((user) => {
+      const userId = user.id;
+      const dataUser = { user };
+
+      const queries = {
+        bio: "SELECT * FROM form_pribadi WHERE user_id = ?",
+        orangtua: "SELECT * FROM form_orangtua WHERE user_id = ?",
+        pres: "SELECT * FROM form_prestasi WHERE user_id = ?",
+        rumah: "SELECT * FROM form_rumah WHERE user_id = ?",
+        kesehatan: "SELECT * FROM form_kesehatan WHERE user_id = ?",
+        berkas: "SELECT * FROM form_berkas WHERE user_id = ?",
+        aturan: "SELECT * FROM form_aturan WHERE user_id = ?",
+      };
+
+      let done = 0;
+      const total = Object.keys(queries).length;
+
+      Object.keys(queries).forEach((key) => {
+        db.query(queries[key], [userId], (err, result) => {
+          if (err) {
+            return res.status(500).json({ message: "Gagal mengambil data", err });
+          }
+
+          dataUser[key] = result.length ? result[0] : null;
+
+          done++;
+
+          // ketika semua form selesai diambil
+          if (done === total) {
+            finalData.push(dataUser);
+            completedUsers++;
+
+            // ketika semua user selesai diambil
+            if (completedUsers === users.length) {
+              return res.json({
+                message: "Berhasil mengambil semua pendaftaran",
+                data: finalData,
+              });
+            }
+          }
+        });
+      });
+    });
+  });
+};
