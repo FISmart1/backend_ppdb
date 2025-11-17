@@ -8,6 +8,7 @@ const app = express();
 const allowedOrigins = [
   "https://spmb.smktibazma.sch.id",
   "https://backend_spmb.smktibazma.sch.id",
+  "https://adminspmb.smktibazma.sch.id",
   "http://localhost:3000"
 ];
 
