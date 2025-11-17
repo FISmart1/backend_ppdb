@@ -81,25 +81,25 @@ exports.simpanFormPrestasi = (req, res) => {
   const sql = `
     INSERT INTO form_prestasi (
       user_id,
-      math_s3, math_s4, math_s5,
-      indo_s3, indo_s4, indo_s5,
-      english_s3, english_s4, english_s5,
-      ipa_s3, ipa_s4, ipa_s5,
-      pai_s3, pai_s4, pai_s5,
+      math_s3, math_s4,
+      indo_s3, indo_s4,
+      english_s3, english_s4,
+      ipa_s3, ipa_s4,
+      pai_s3, pai_s4,
       foreignLanguage, hafalan,
       achievement, organization,
       dream, hobby, special
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   const values = [
     user_id,
 
-    math.s3, math.s4, math.s5,
-    indo.s3, indo.s4, indo.s5,
-    english.s3, english.s4, english.s5,
-    ipa.s3, ipa.s4, ipa.s5,
-    pai.s3, pai.s4, pai.s5,
+    math.s3, math.s4,
+    indo.s3, indo.s4,
+    english.s3, english.s4,
+    ipa.s3, ipa.s4,
+    pai.s3, pai.s4,
 
     foreignLanguage,
     hafalan,
