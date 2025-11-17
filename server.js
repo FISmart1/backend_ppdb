@@ -99,7 +99,7 @@ app.get("/", (req, res) => {
   res.send("API berjalan...");
 });
 
-const PORT = 3001;
+const PORT = 3000;
 const HOST = "0.0.0.0";
 
 app.listen(PORT, HOST, () => {
