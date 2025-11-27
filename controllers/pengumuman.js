@@ -19,12 +19,19 @@ exports.updatePengumuman = (req, res) => {
   const data = { ...req.body };
   delete data.user_id;
 
+  console.log("📥 Request updatePengumuman:", { user_id, data });
+
   db.query(
     "UPDATE pengumuman_seleksi SET ? WHERE user_id = ?",
     [data, user_id],
-    (err) => {
-      if (err) return res.status(500).json({ message: "Update gagal" });
+    (err, result) => {
+      if (err) {
+        console.error("❌ ERROR SQL:", err);
+        return res.status(500).json({ message: "Update gagal", error: err });
+      }
+      console.log("✔️ SQL RESULT:", result);
       res.json({ message: "Berhasil diperbarui" });
     }
   );
 };
+
