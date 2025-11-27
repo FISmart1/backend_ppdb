@@ -4,8 +4,7 @@ exports.getAllPengumuman = (req, res) => {
   const sql = `
     SELECT 
       ps.user_id,
-      u.nisn,
-      u.nama,
+      u.name,
       ps.seleksi_berkas,
       ps.tes_akademik,
       ps.tes_psikotes,
