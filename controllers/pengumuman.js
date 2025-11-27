@@ -18,14 +18,21 @@ exports.getAllPengumuman = (req, res) => {
     LEFT JOIN users u ON ps.user_id = u.id
   `;
 
+  console.log("SQL:", sql); // supaya jelas
+
   db.query(sql, (err, results) => {
     if (err) {
-      console.error("❌ ERROR SQL getAllPengumuman:", err);
-      return res.status(500).json({ message: "Gagal mengambil data pengumuman" });
+      console.error("❌ SQL ERROR:", err.sqlMessage);
+      console.error("❌ CODE:", err.code);
+      return res.status(500).json({ message: "SQL error", error: err });
     }
+
+    console.log("Hasil:", results); // lihat hasil
+
     res.json(results);
   });
 };
+
 
 
 
