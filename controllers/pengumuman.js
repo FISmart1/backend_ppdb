@@ -1,5 +1,30 @@
 const db = require("../db");
 
+exports.getAllPengumuman = (req, res) => {
+  db.query(
+    `SELECT 
+      ps.user_id,
+      u.nisn,
+      u.nama,
+      ps.seleksi_berkas,
+      ps.tes_akademik,
+      ps.tes_psikotes,
+      ps.wawancara,
+      ps.tes_baca_quran,
+      ps.home_visit,
+      ps.pengumuman_akhir,
+      ps.catatan
+    FROM pengumuman_seleksi ps
+    JOIN users u ON ps.user_id = u.id
+    ORDER BY u.nama ASC`,
+    (err, results) => {
+      if (err) return res.status(500).json({ message: "Gagal mengambil data pengumuman" });
+      res.json(results);
+    }
+  );
+};
+
+
 exports.getPengumuman = (req, res) => {
   const user_id = req.params.user_id;
 
