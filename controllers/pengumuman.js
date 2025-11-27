@@ -11,8 +11,7 @@ exports.getAllPengumuman = (req, res) => {
       ps.wawancara,
       ps.tes_baca_quran,
       ps.home_visit,
-      ps.pengumuman_akhir,
-      ps.catatan
+      ps.pengumuman_akhir
     FROM pengumuman_seleksi ps
     LEFT JOIN users u ON ps.user_id = u.id
   `;
