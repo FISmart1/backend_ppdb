@@ -20,11 +20,9 @@ exports.updatePengumuman = (req, res) => {
 
   // Hapus field yang tidak boleh ikut di-update
   delete data.isLolos; // pastikan tidak ikut masuk ke query
-
+  delete data.catatan;
   console.log("📥 Request updatePengumuman:", { user_id, data });
 
-  // Default catatan jika kosong
-  if (!data.catatan) data.catatan = "-";
 
   // 1️⃣ Cek apakah data sudah ada
   db.query(
