@@ -18,25 +18,15 @@ exports.updatePengumuman = (req, res) => {
   const user_id = req.params.user_id;
   const data = { ...req.body };
 
-  // Hapus user_id dari body agar tidak ikut di update
-  delete data.user_id;
+  // Hapus field yang tidak boleh ikut di-update
+  delete data.isLolos; // pastikan tidak ikut masuk ke query
 
   console.log("📥 Request updatePengumuman:", { user_id, data });
-
-  // 🚨 Validasi penting
-  if (data.isLolos === undefined || data.isLolos === null) {
-    return res.status(400).json({
-      message: "Field 'isLolos' wajib dikirim (true/false/0/1)"
-    });
-  }
-
-  // Pastikan isLolos jadi angka (jika Boolean true/false dari frontend)
-  data.isLolos = Number(data.isLolos);
 
   // Default catatan jika kosong
   if (!data.catatan) data.catatan = "-";
 
-  // 1️⃣ Cek apakah user sudah ada datanya
+  // 1️⃣ Cek apakah data sudah ada
   db.query(
     "SELECT * FROM pengumuman_seleksi WHERE user_id = ?",
     [user_id],
