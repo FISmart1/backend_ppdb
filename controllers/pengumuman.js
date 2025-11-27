@@ -1,8 +1,8 @@
 const db = require("../db");
 
 exports.getAllPengumuman = (req, res) => {
-  db.query(
-    `SELECT 
+  const sql = `
+    SELECT 
       ps.user_id,
       u.nisn,
       u.nama,
@@ -15,14 +15,18 @@ exports.getAllPengumuman = (req, res) => {
       ps.pengumuman_akhir,
       ps.catatan
     FROM pengumuman_seleksi ps
-    JOIN users u ON ps.user_id = u.id
-    ORDER BY u.nama ASC`,
-    (err, results) => {
-      if (err) return res.status(500).json({ message: "Gagal mengambil data pengumuman" });
-      res.json(results);
+    LEFT JOIN users u ON ps.user_id = u.id
+  `;
+
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error("❌ ERROR SQL getAllPengumuman:", err);
+      return res.status(500).json({ message: "Gagal mengambil data pengumuman" });
     }
-  );
+    res.json(results);
+  });
 };
+
 
 
 exports.getPengumuman = (req, res) => {
