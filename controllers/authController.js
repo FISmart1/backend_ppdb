@@ -6,10 +6,10 @@ const jwt = require('jsonwebtoken');
 exports.register = (req, res) => {
   console.log("REQ BODY:", req.body);
 
-  const { name, email, password, no_wa } = req.body;
-  console.log("NO_WA:", no_wa);
+  const { name, email, password, wa } = req.body;
+  console.log("NO_WA:", wa);
 
-  if (!name || !email || !password|| !no_wa ) return res.status(400).json({ message: 'Semua field wajib diisi!' });
+  if (!name || !email || !password || !wa ) return res.status(400).json({ message: 'Semua field wajib diisi!' });
 
   // Cek email sudah dipakai atau belum
   const checkEmailQuery = 'SELECT * FROM users WHERE email = ?';
@@ -21,8 +21,8 @@ exports.register = (req, res) => {
     // Hash password
     const hashedPassword = bcrypt.hashSync(password, 10);
 
-    const insertQuery = 'INSERT INTO users (name, email, password, no_wa) VALUES (?, ?, ?, ?)';
-    db.query(insertQuery, [name, email, hashedPassword, no_wa], (err2) => {
+    const insertQuery = 'INSERT INTO users (name, email, password, wa) VALUES (?, ?, ?, ?)';
+    db.query(insertQuery, [name, email, hashedPassword, wa], (err2) => {
       if (err2) return res.status(500).json({ message: 'Gagal mendaftar', err2 });
 
       return res.status(201).json({ message: 'Pendaftaran berhasil!' });
