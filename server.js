@@ -18,6 +18,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 console.log("SERVER PATH:", __dirname);
 console.log("UPLOADS PATH:", path.join(__dirname, "uploads"));
 

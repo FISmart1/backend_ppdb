@@ -4,7 +4,10 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 exports.register = (req, res) => {
+  console.log("REQ BODY:", req.body);
+
   const { name, email, password, no_wa } = req.body;
+  console.log("NO_WA:", no_wa);
 
   if (!name || !email || !password|| !no_wa ) return res.status(400).json({ message: 'Semua field wajib diisi!' });
 
