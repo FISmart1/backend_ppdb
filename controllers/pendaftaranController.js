@@ -226,6 +226,13 @@ exports.simpanFormBerkas = (req, res) => {
   const user_id = req.body.user_id;
 
   if (!user_id) return res.status(400).json({ message: 'user_id wajib dikirim!' });
+  if (!req.files) {
+    return res.status(400).json({
+      message: 'File tidak terkirim. Pastikan multipart/form-data.',
+    });
+  }
+  console.log('FILES:', req.files);
+  console.log('BODY:', req.body);
 
   const f = req.files;
 
