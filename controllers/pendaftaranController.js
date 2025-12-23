@@ -1,4 +1,4 @@
-const db = require("../db");
+const db = require('../db');
 
 exports.simpanFormPribadi = (req, res) => {
   const {
@@ -26,11 +26,11 @@ exports.simpanFormPribadi = (req, res) => {
     livingWith,
     livingWithCustom,
     phone,
-    socialMedia
+    socialMedia,
   } = req.body;
 
   if (!user_id) {
-    return res.status(400).json({ message: "user_id wajib dikirim!" });
+    return res.status(400).json({ message: 'user_id wajib dikirim!' });
   }
 
   const sql = `
@@ -44,38 +44,48 @@ exports.simpanFormPribadi = (req, res) => {
   `;
 
   const values = [
-    user_id, fullName, nisn, nik, birthPlace, birthDate,
-    province, city, district, village, addressDetail, rt, rw, postalCode,
-    schoolOrigin, graduationYear, npsn,
-    childOrder, parentStatus, familyStatus, socialAid, livingWith, livingWithCustom,
-    phone, socialMedia
+    user_id,
+    fullName,
+    nisn,
+    nik,
+    birthPlace,
+    birthDate,
+    province,
+    city,
+    district,
+    village,
+    addressDetail,
+    rt,
+    rw,
+    postalCode,
+    schoolOrigin,
+    graduationYear,
+    npsn,
+    childOrder,
+    parentStatus,
+    familyStatus,
+    socialAid,
+    livingWith,
+    livingWithCustom,
+    phone,
+    socialMedia,
   ];
 
   db.query(sql, values, (err) => {
     if (err) {
       console.error(err);
-      return res.status(500).json({ message: "Gagal menyimpan data!" });
+      return res.status(500).json({ message: 'Gagal menyimpan data!' });
     }
 
-    res.json({ message: "Form pribadi berhasil disimpan!" });
+    res.json({ message: 'Form pribadi berhasil disimpan!' });
   });
 };
 
 exports.simpanFormPrestasi = (req, res) => {
-  const {
-    user_id,
-    math, indo, english, ipa, pai,
-    foreignLanguage,
-    hafalan,
-    achievement,
-    organization,
-    dream,
-    hobby,
-    special
-  } = req.body;
+  const { user_id, math, indo, english, ipa, pai, foreignLanguage, hafalan, achievement, organization, dream, hobby, special } = req.body;
 
   if (!user_id) {
-    return res.status(400).json({ message: "user_id wajib dikirim!" });
+    return res.status(400).json({ message: 'user_id wajib dikirim!' });
   }
 
   const sql = `
@@ -92,31 +102,15 @@ exports.simpanFormPrestasi = (req, res) => {
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
-  const values = [
-    user_id,
-
-    math.s3, math.s4,
-    indo.s3, indo.s4,
-    english.s3, english.s4,
-    ipa.s3, ipa.s4,
-    pai.s3, pai.s4,
-
-    foreignLanguage,
-    hafalan,
-    achievement,
-    organization,
-    dream,
-    hobby,
-    special
-  ];
+  const values = [user_id, math.s3, math.s4, indo.s3, indo.s4, english.s3, english.s4, ipa.s3, ipa.s4, pai.s3, pai.s4, foreignLanguage, hafalan, achievement, organization, dream, hobby, special];
 
   db.query(sql, values, (err) => {
     if (err) {
       console.error(err);
-      return res.status(500).json({ message: "Gagal menyimpan data prestasi!" });
+      return res.status(500).json({ message: 'Gagal menyimpan data prestasi!' });
     }
 
-    res.json({ message: "Form prestasi berhasil disimpan!" });
+    res.json({ message: 'Form prestasi berhasil disimpan!' });
   });
 };
 
@@ -187,36 +181,25 @@ exports.simpanFormOrangTua = (req, res) => {
     wali_penghasilan || 0,
 
     info_ppdb,
-    saudara_beasiswa || "-",
+    saudara_beasiswa || '-',
   ];
 
-  console.log("VALUES YANG DIKIRIM:", values); // CEK
+  console.log('VALUES YANG DIKIRIM:', values); // CEK
 
   db.query(sql, values, (err) => {
     if (err) {
-      console.error("MYSQL ERROR:", err);
-      return res.status(500).json({ message: "Gagal menyimpan data!" });
+      console.error('MYSQL ERROR:', err);
+      return res.status(500).json({ message: 'Gagal menyimpan data!' });
     }
-    return res.json({ message: "Data orang tua / wali berhasil disimpan!" });
+    return res.json({ message: 'Data orang tua / wali berhasil disimpan!' });
   });
 };
 
 exports.simpanFormRumah = (req, res) => {
-  const {
-    user_id,
-    luasTanah,
-    kualitasRumah,
-    statusKepemilikanRumah,
-    kendaraanDimiliki,
-    statusKendaraan,
-    hartaTidakBergerak,
-    statusHarta,
-    dayaListrik,
-    sumberAir,
-  } = req.body;
+  const { user_id, luasTanah, kualitasRumah, statusKepemilikanRumah, kendaraanDimiliki, statusKendaraan, hartaTidakBergerak, statusHarta, dayaListrik, sumberAir } = req.body;
 
   if (!user_id) {
-    return res.status(400).json({ message: "user_id wajib dikirim!" });
+    return res.status(400).json({ message: 'user_id wajib dikirim!' });
   }
 
   const sql = `
@@ -228,32 +211,21 @@ exports.simpanFormRumah = (req, res) => {
     ) VALUES (?,?,?,?,?,?,?,?,?,?)
   `;
 
-  const values = [
-    user_id,
-    luasTanah,
-    kualitasRumah,
-    statusKepemilikanRumah,
-    kendaraanDimiliki,
-    statusKendaraan,
-    hartaTidakBergerak,
-    statusHarta,
-    dayaListrik,
-    sumberAir,
-  ];
+  const values = [user_id, luasTanah, kualitasRumah, statusKepemilikanRumah, kendaraanDimiliki, statusKendaraan, hartaTidakBergerak, statusHarta, dayaListrik, sumberAir];
 
   db.query(sql, values, (err) => {
     if (err) {
       console.log(err);
-      return res.status(500).json({ message: "Gagal menyimpan data!" });
+      return res.status(500).json({ message: 'Gagal menyimpan data!' });
     }
-    res.json({ message: "Form rumah berhasil disimpan!" });
+    res.json({ message: 'Form rumah berhasil disimpan!' });
   });
 };
 
 exports.simpanFormBerkas = (req, res) => {
   const user_id = req.body.user_id;
 
-  if (!user_id) return res.status(400).json({ message: "user_id wajib dikirim!" });
+  if (!user_id) return res.status(400).json({ message: 'user_id wajib dikirim!' });
 
   const f = req.files;
 
@@ -279,38 +251,27 @@ exports.simpanFormBerkas = (req, res) => {
     f.tagihan_listrik?.[0]?.filename || null,
     f.reels?.[0]?.filename || null,
 
-    f.depan?.[0]?.filename || null,
-    f.ruangtamu?.[0]?.filename || null,
-    f.kamar?.[0]?.filename || null,
+    // ✅ FIX DI SINI
+    f.rumah_depan?.[0]?.filename || null,
+    f.rumah_ruangtamu?.[0]?.filename || null,
+    f.rumah_kamar?.[0]?.filename || null,
   ];
 
   db.query(sql, values, (err) => {
     if (err) {
-      console.error("UPLOAD ERROR:", err);
-      return res.status(500).json({ message: "Gagal menyimpan berkas!" });
+      console.error('UPLOAD ERROR:', err);
+      return res.status(500).json({ message: 'Gagal menyimpan berkas!' });
     }
 
-    return res.json({ message: "Berkas berhasil diupload!" });
+    return res.json({ message: 'Berkas berhasil diupload!' });
   });
 };
 
 exports.simpanFormKesehatan = (req, res) => {
-  const {
-    user_id,
-    tinggiBadan,
-    beratBadan,
-    penyakitMenular,
-    penyakitNonMenular,
-    golonganDarah,
-    kesehatanMental,
-    butaWarna,
-    perokok
-  } = req.body;
+  const { user_id, tinggiBadan, beratBadan, penyakitMenular, penyakitNonMenular, golonganDarah, kesehatanMental, butaWarna, perokok } = req.body;
 
   if (!user_id) {
-    return res
-      .status(400)
-      .json({ message: "user_id wajib dikirim!" });
+    return res.status(400).json({ message: 'user_id wajib dikirim!' });
   }
 
   const sql = `
@@ -322,36 +283,24 @@ exports.simpanFormKesehatan = (req, res) => {
     ) VALUES (?,?,?,?,?,?,?,?,?)
   `;
 
-  const values = [
-    user_id,
-    tinggiBadan,
-    beratBadan,
-    penyakitMenular,
-    penyakitNonMenular,
-    golonganDarah,
-    kesehatanMental,
-    butaWarna,
-    perokok
-  ];
+  const values = [user_id, tinggiBadan, beratBadan, penyakitMenular, penyakitNonMenular, golonganDarah, kesehatanMental, butaWarna, perokok];
 
   db.query(sql, values, (err) => {
     if (err) {
       console.error(err);
 
       // Jika user sudah punya data
-      if (err.code === "ER_DUP_ENTRY") {
+      if (err.code === 'ER_DUP_ENTRY') {
         return res.status(400).json({
-          message: "Data kesehatan untuk user ini sudah ada!"
+          message: 'Data kesehatan untuk user ini sudah ada!',
         });
       }
 
-      return res
-        .status(500)
-        .json({ message: "Gagal menyimpan data!" });
+      return res.status(500).json({ message: 'Gagal menyimpan data!' });
     }
 
     res.json({
-      message: "Form kesehatan berhasil disimpan!"
+      message: 'Form kesehatan berhasil disimpan!',
     });
   });
 };
@@ -360,13 +309,13 @@ exports.simpanFormAturan = (req, res) => {
   const { user_id, pernyataan1, pernyataan2, pernyataan3 } = req.body;
 
   if (!user_id) {
-    return res.status(400).json({ message: "user_id wajib dikirim!" });
+    return res.status(400).json({ message: 'user_id wajib dikirim!' });
   }
 
   // Semua harus YA
-  if (pernyataan1 !== "ya" || pernyataan2 !== "ya" || pernyataan3 !== "ya") {
+  if (pernyataan1 !== 'ya' || pernyataan2 !== 'ya' || pernyataan3 !== 'ya') {
     return res.status(400).json({
-      message: "Semua pernyataan harus dijawab 'ya' untuk melanjutkan."
+      message: "Semua pernyataan harus dijawab 'ya' untuk melanjutkan.",
     });
   }
 
@@ -382,34 +331,33 @@ exports.simpanFormAturan = (req, res) => {
     if (err) {
       console.error(err);
 
-      if (err.code === "ER_DUP_ENTRY") {
+      if (err.code === 'ER_DUP_ENTRY') {
         return res.status(400).json({
-          message: "Form aturan sudah pernah diisi oleh user ini!"
+          message: 'Form aturan sudah pernah diisi oleh user ini!',
         });
       }
 
-      return res.status(500).json({ message: "Gagal menyimpan data!" });
+      return res.status(500).json({ message: 'Gagal menyimpan data!' });
     }
 
-    res.json({ message: "Form aturan berhasil disimpan!" });
+    res.json({ message: 'Form aturan berhasil disimpan!' });
   });
 };
-
 
 //get semua disini
 exports.getFormPribadi = (req, res) => {
   const { user_id } = req.params;
 
-  const sql = "SELECT * FROM form_pribadi WHERE user_id = ? LIMIT 1";
+  const sql = 'SELECT * FROM form_pribadi WHERE user_id = ? LIMIT 1';
 
   db.query(sql, [user_id], (err, results) => {
     if (err) {
       console.error(err);
-      return res.status(500).json({ message: "Gagal mengambil data form pribadi!" });
+      return res.status(500).json({ message: 'Gagal mengambil data form pribadi!' });
     }
 
     if (results.length === 0) {
-      return res.status(404).json({ message: "Data form pribadi belum diisi." });
+      return res.status(404).json({ message: 'Data form pribadi belum diisi.' });
     }
 
     res.json(results[0]);
@@ -419,16 +367,16 @@ exports.getFormPribadi = (req, res) => {
 exports.getFormPrestasi = (req, res) => {
   const { user_id } = req.params;
 
-  const sql = "SELECT * FROM form_prestasi WHERE user_id = ? LIMIT 1";
+  const sql = 'SELECT * FROM form_prestasi WHERE user_id = ? LIMIT 1';
 
   db.query(sql, [user_id], (err, results) => {
     if (err) {
       console.error(err);
-      return res.status(500).json({ message: "Gagal mengambil data form prestasi!" });
+      return res.status(500).json({ message: 'Gagal mengambil data form prestasi!' });
     }
 
     if (results.length === 0) {
-      return res.status(404).json({ message: "Data form prestasi belum diisi." });
+      return res.status(404).json({ message: 'Data form prestasi belum diisi.' });
     }
 
     res.json(results[0]);
@@ -438,13 +386,13 @@ exports.getFormPrestasi = (req, res) => {
 exports.getFormOrangTua = (req, res) => {
   const { user_id } = req.params;
 
-  const sql = "SELECT * FROM form_orangtua WHERE user_id = ? LIMIT 1";
+  const sql = 'SELECT * FROM form_orangtua WHERE user_id = ? LIMIT 1';
 
   db.query(sql, [user_id], (err, results) => {
-    if (err) return res.status(500).json({ message: "Gagal mengambil data!", error: err });
+    if (err) return res.status(500).json({ message: 'Gagal mengambil data!', error: err });
 
     if (results.length === 0) {
-      return res.status(404).json({ message: "Data form orang tua belum diisi." });
+      return res.status(404).json({ message: 'Data form orang tua belum diisi.' });
     }
 
     return res.json(results[0]);
@@ -454,13 +402,13 @@ exports.getFormOrangTua = (req, res) => {
 exports.getFormBerkas = (req, res) => {
   const { user_id } = req.params;
 
-  const sql = "SELECT * FROM form_berkas WHERE user_id = ? LIMIT 1";
+  const sql = 'SELECT * FROM form_berkas WHERE user_id = ? LIMIT 1';
 
   db.query(sql, [user_id], (err, results) => {
-    if (err) return res.status(500).json({ message: "Gagal mengambil data!" });
+    if (err) return res.status(500).json({ message: 'Gagal mengambil data!' });
 
     if (results.length === 0) {
-      return res.status(404).json({ message: "Data berkas belum diupload." });
+      return res.status(404).json({ message: 'Data berkas belum diupload.' });
     }
 
     res.json(results[0]);
@@ -470,54 +418,40 @@ exports.getFormBerkas = (req, res) => {
 exports.getFormRumah = (req, res) => {
   const { user_id } = req.params;
 
-  db.query(
-    `SELECT * FROM form_rumah WHERE user_id = ?`,
-    [user_id],
-    (err, results) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).json({ message: "Gagal mengambil data!" });
-      }
-
-      res.json(results[0] || {});
+  db.query(`SELECT * FROM form_rumah WHERE user_id = ?`, [user_id], (err, results) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({ message: 'Gagal mengambil data!' });
     }
-  );
+
+    res.json(results[0] || {});
+  });
 };
 
 exports.getFormKesehatan = (req, res) => {
   const { user_id } = req.params;
 
-  db.query(
-    `SELECT * FROM form_kesehatan WHERE user_id = ?`,
-    [user_id],
-    (err, results) => {
-      if (err) {
-        console.error(err);
-        return res
-          .status(500)
-          .json({ message: "Gagal mengambil data!" });
-      }
-
-      res.json(results[0] || {});
+  db.query(`SELECT * FROM form_kesehatan WHERE user_id = ?`, [user_id], (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Gagal mengambil data!' });
     }
-  );
+
+    res.json(results[0] || {});
+  });
 };
 
 exports.getFormAturan = (req, res) => {
   const { user_id } = req.params;
 
-  db.query(
-    `SELECT * FROM form_aturan WHERE user_id = ?`,
-    [user_id],
-    (err, results) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ message: "Gagal mengambil data!" });
-      }
-
-      res.json(results[0] || {});
+  db.query(`SELECT * FROM form_aturan WHERE user_id = ?`, [user_id], (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Gagal mengambil data!' });
     }
-  );
+
+    res.json(results[0] || {});
+  });
 };
 
 exports.getFullPendaftaranUser = (req, res) => {
@@ -527,14 +461,14 @@ exports.getFullPendaftaranUser = (req, res) => {
 
   // SQL tabel-tabelnya
   const queries = {
-    user: "SELECT * FROM users WHERE id = ?",
-    bio: "SELECT * FROM form_pribadi WHERE user_id = ?",
-    orangtua: "SELECT * FROM form_orangtua WHERE user_id = ?",
-    pres: "SELECT * FROM form_prestasi WHERE user_id = ?",
-    rumah: "SELECT * FROM form_rumah WHERE user_id = ?",
-    kesehatan: "SELECT * FROM form_kesehatan WHERE user_id = ?",
-    berkas: "SELECT * FROM form_berkas WHERE user_id = ?",
-    aturan: "SELECT * FROM form_aturan WHERE user_id = ?",
+    user: 'SELECT * FROM users WHERE id = ?',
+    bio: 'SELECT * FROM form_pribadi WHERE user_id = ?',
+    orangtua: 'SELECT * FROM form_orangtua WHERE user_id = ?',
+    pres: 'SELECT * FROM form_prestasi WHERE user_id = ?',
+    rumah: 'SELECT * FROM form_rumah WHERE user_id = ?',
+    kesehatan: 'SELECT * FROM form_kesehatan WHERE user_id = ?',
+    berkas: 'SELECT * FROM form_berkas WHERE user_id = ?',
+    aturan: 'SELECT * FROM form_aturan WHERE user_id = ?',
   };
 
   let completed = 0;
@@ -543,9 +477,9 @@ exports.getFullPendaftaranUser = (req, res) => {
   Object.keys(queries).forEach((key) => {
     db.query(queries[key], [id], (err, results) => {
       if (err) {
-        console.log("MYSQL ERROR:", err);
+        console.log('MYSQL ERROR:', err);
         return res.status(500).json({
-          message: "Gagal mengambil data pendaftaran",
+          message: 'Gagal mengambil data pendaftaran',
           error: err,
         });
       }
@@ -559,18 +493,14 @@ exports.getFullPendaftaranUser = (req, res) => {
       }
     });
   });
-
-  
 };
 
 exports.getComplete = async (req, res) => {
   try {
     const user_id = req.params.id;
 
-    const [rows] = await db
-      .promise()
-      .query(
-        `
+    const [rows] = await db.promise().query(
+      `
         SELECT
           (SELECT COUNT(*) FROM form_pribadi WHERE user_id = ?) AS biodata_ok,
           (SELECT COUNT(*) FROM form_rumah WHERE user_id = ?) AS alamat_ok,
@@ -579,18 +509,12 @@ exports.getComplete = async (req, res) => {
           (SELECT COUNT(*) FROM form_kesehatan WHERE user_id = ?) AS kesehatan_ok,
           (SELECT COUNT(*) FROM form_berkas WHERE user_id = ?) AS berkas_ok
         `,
-        [user_id, user_id, user_id, user_id, user_id, user_id]
-      );
+      [user_id, user_id, user_id, user_id, user_id, user_id]
+    );
 
     const data = rows[0];
 
-    const isComplete =
-      data.biodata_ok > 0 &&
-      data.alamat_ok > 0 &&
-      data.orangtua_ok > 0 &&
-      data.prestasi_ok > 0 &&
-      data.kesehatan_ok > 0 &&
-      data.berkas_ok > 0 
+    const isComplete = data.biodata_ok > 0 && data.alamat_ok > 0 && data.orangtua_ok > 0 && data.prestasi_ok > 0 && data.kesehatan_ok > 0 && data.berkas_ok > 0;
 
     res.json({
       status: true,
@@ -598,10 +522,10 @@ exports.getComplete = async (req, res) => {
       detail: data,
     });
   } catch (err) {
-    console.error("ERROR getComplete:", err);
+    console.error('ERROR getComplete:', err);
     res.status(500).json({
       status: false,
-      message: "Server error",
+      message: 'Server error',
     });
   }
 };
@@ -609,15 +533,11 @@ exports.getComplete = async (req, res) => {
 exports.getPengumuman = (req, res) => {
   const user_id = req.params.user_id;
 
-  db.query(
-    "SELECT * FROM pengumuman_seleksi WHERE user_id = ?",
-    [user_id],
-    (err, results) => {
-      if (err) return res.status(500).json({ message: "Gagal mengambil data" });
+  db.query('SELECT * FROM pengumuman_seleksi WHERE user_id = ?', [user_id], (err, results) => {
+    if (err) return res.status(500).json({ message: 'Gagal mengambil data' });
 
-      res.json(results[0] || {});
-    }
-  );
+    res.json(results[0] || {});
+  });
 };
 
 exports.updatePengumuman = (req, res) => {
@@ -625,27 +545,23 @@ exports.updatePengumuman = (req, res) => {
   const fields = { ...req.body };
   delete fields.user_id;
 
-  db.query(
-    "UPDATE pengumuman_seleksi SET ? WHERE user_id = ?",
-    [fields, user_id],
-    (err, result) => {
-      if (err) return res.status(500).json({ message: "Update gagal!" });
-      return res.json({ message: "Update sukses!" });
-    }
-  );
+  db.query('UPDATE pengumuman_seleksi SET ? WHERE user_id = ?', [fields, user_id], (err, result) => {
+    if (err) return res.status(500).json({ message: 'Update gagal!' });
+    return res.json({ message: 'Update sukses!' });
+  });
 };
 
 exports.getFullPendaftaranAll = (req, res) => {
-  const queryUsers = "SELECT * FROM users";
+  const queryUsers = 'SELECT * FROM users';
 
   db.query(queryUsers, (err, users) => {
     if (err) {
-      return res.status(500).json({ message: "Gagal mengambil users", err });
+      return res.status(500).json({ message: 'Gagal mengambil users', err });
     }
 
     // Jika tidak ada user
     if (users.length === 0) {
-      return res.json({ message: "Tidak ada user", data: [] });
+      return res.json({ message: 'Tidak ada user', data: [] });
     }
 
     let finalData = [];
@@ -656,13 +572,13 @@ exports.getFullPendaftaranAll = (req, res) => {
       const dataUser = { user };
 
       const queries = {
-        bio: "SELECT * FROM form_pribadi WHERE user_id = ?",
-        orangtua: "SELECT * FROM form_orangtua WHERE user_id = ?",
-        pres: "SELECT * FROM form_prestasi WHERE user_id = ?",
-        rumah: "SELECT * FROM form_rumah WHERE user_id = ?",
-        kesehatan: "SELECT * FROM form_kesehatan WHERE user_id = ?",
-        berkas: "SELECT * FROM form_berkas WHERE user_id = ?",
-        aturan: "SELECT * FROM form_aturan WHERE user_id = ?",
+        bio: 'SELECT * FROM form_pribadi WHERE user_id = ?',
+        orangtua: 'SELECT * FROM form_orangtua WHERE user_id = ?',
+        pres: 'SELECT * FROM form_prestasi WHERE user_id = ?',
+        rumah: 'SELECT * FROM form_rumah WHERE user_id = ?',
+        kesehatan: 'SELECT * FROM form_kesehatan WHERE user_id = ?',
+        berkas: 'SELECT * FROM form_berkas WHERE user_id = ?',
+        aturan: 'SELECT * FROM form_aturan WHERE user_id = ?',
       };
 
       let done = 0;
@@ -671,7 +587,7 @@ exports.getFullPendaftaranAll = (req, res) => {
       Object.keys(queries).forEach((key) => {
         db.query(queries[key], [userId], (err, result) => {
           if (err) {
-            return res.status(500).json({ message: "Gagal mengambil data", err });
+            return res.status(500).json({ message: 'Gagal mengambil data', err });
           }
 
           dataUser[key] = result.length ? result[0] : null;
@@ -686,7 +602,7 @@ exports.getFullPendaftaranAll = (req, res) => {
             // ketika semua user selesai diambil
             if (completedUsers === users.length) {
               return res.json({
-                message: "Berhasil mengambil semua pendaftaran",
+                message: 'Berhasil mengambil semua pendaftaran',
                 data: finalData,
               });
             }
