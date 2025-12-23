@@ -57,7 +57,7 @@ exports.login = (req, res) => {
         id: user.id,
         name: user.name,
         email: user.email,
-        validasi_pendaftaran: user.validasi_pendaftaran, // 🔥 WAJIB
+        validasi_pendaftaran: user.validasi_pendaftaran, // 🔥 -=
       },
     });
   });
@@ -136,11 +136,11 @@ exports.requestResetPassword = (req, res) => {
       const expired = new Date(Date.now() + 15 * 60 * 1000);
 
       db.query(
-        'UPDATE users SET reset_token=?, reset_expired=? WHERE id=?',
+        'UPDATE users SET reset_token=?, reset_token_expired=? WHERE id=?',
         [token, expired, result[0].id]
       );
 
-      const resetLink = `https://frontend-smktibazma.sch.id/reset-password?token=${token}`;
+      const resetLink = `https://spmb.smktibazma.sch.id/reset-password?token=${token}`;
 
       try {
         await axios.post(
