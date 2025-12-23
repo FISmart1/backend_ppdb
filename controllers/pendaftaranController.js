@@ -223,19 +223,82 @@ exports.simpanFormRumah = (req, res) => {
 };
 
 exports.simpanFormBerkas = (req, res) => {
-  const user_id = req.body.user_id;
+  const { user_id, is_update } = req.body;
 
-  if (!user_id) return res.status(400).json({ message: 'user_id wajib dikirim!' });
+  if (!user_id) {
+    return res.status(400).json({ message: 'user_id wajib dikirim!' });
+  }
+
   if (!req.files) {
     return res.status(400).json({
       message: 'File tidak terkirim. Pastikan multipart/form-data.',
     });
   }
-  console.log('FILES:', req.files);
-  console.log('BODY:', req.body);
 
   const f = req.files;
+  const update = is_update === '1';
 
+  console.log('FILES:', f);
+  console.log('BODY:', req.body);
+
+  // Ambil nama file (kalau ada)
+  const data = {
+    rapor: f.rapor?.[0]?.filename,
+    sktm: f.sktm?.[0]?.filename,
+    ss_ig: f.ss_ig?.[0]?.filename,
+    kk: f.kk?.[0]?.filename,
+    foto: f.foto?.[0]?.filename,
+    kip: f.kip?.[0]?.filename,
+    bpjs: f.bpjs?.[0]?.filename,
+    rekomendasi_surat: f.rekomendasi_surat?.[0]?.filename,
+    tagihan_listrik: f.tagihan_listrik?.[0]?.filename,
+    reels: f.reels?.[0]?.filename,
+    rumah_depan: f.rumah_depan?.[0]?.filename,
+    rumah_ruangtamu: f.rumah_ruangtamu?.[0]?.filename,
+    rumah_kamar: f.rumah_kamar?.[0]?.filename,
+  };
+
+  // =========================
+  // 🔵 MODE UPDATE
+  // =========================
+  if (update) {
+    const fields = [];
+    const values = [];
+
+    Object.entries(data).forEach(([key, value]) => {
+      if (value) {
+        fields.push(`${key} = ?`);
+        values.push(value);
+      }
+    });
+
+    if (fields.length === 0) {
+      return res.status(400).json({
+        message: 'Tidak ada file baru untuk diperbarui.',
+      });
+    }
+
+    const sql = `
+      UPDATE form_berkas
+      SET ${fields.join(', ')}
+      WHERE user_id = ?
+    `;
+
+    values.push(user_id);
+
+    return db.query(sql, values, (err, result) => {
+      if (err) {
+        console.error('UPDATE ERROR:', err);
+        return res.status(500).json({ message: 'Gagal memperbarui berkas!' });
+      }
+
+      return res.json({ message: 'Berkas berhasil diperbarui!' });
+    });
+  }
+
+  // =========================
+  // 🟢 MODE INSERT
+  // =========================
   const sql = `
     INSERT INTO form_berkas (
       user_id, rapor, sktm, ss_ig, kk, foto, kip, bpjs,
@@ -247,32 +310,31 @@ exports.simpanFormBerkas = (req, res) => {
 
   const values = [
     user_id,
-    f.rapor?.[0]?.filename || null,
-    f.sktm?.[0]?.filename || null,
-    f.ss_ig?.[0]?.filename || null,
-    f.kk?.[0]?.filename || null,
-    f.foto?.[0]?.filename || null,
-    f.kip?.[0]?.filename || null,
-    f.bpjs?.[0]?.filename || null,
-    f.rekomendasi_surat?.[0]?.filename || null,
-    f.tagihan_listrik?.[0]?.filename || null,
-    f.reels?.[0]?.filename || null,
-
-    // ✅ FIX DI SINI
-    f.rumah_depan?.[0]?.filename || null,
-    f.rumah_ruangtamu?.[0]?.filename || null,
-    f.rumah_kamar?.[0]?.filename || null,
+    data.rapor || null,
+    data.sktm || null,
+    data.ss_ig || null,
+    data.kk || null,
+    data.foto || null,
+    data.kip || null,
+    data.bpjs || null,
+    data.rekomendasi_surat || null,
+    data.tagihan_listrik || null,
+    data.reels || null,
+    data.rumah_depan || null,
+    data.rumah_ruangtamu || null,
+    data.rumah_kamar || null,
   ];
 
   db.query(sql, values, (err) => {
     if (err) {
-      console.error('UPLOAD ERROR:', err);
+      console.error('INSERT ERROR:', err);
       return res.status(500).json({ message: 'Gagal menyimpan berkas!' });
     }
 
     return res.json({ message: 'Berkas berhasil diupload!' });
   });
 };
+
 
 exports.simpanFormKesehatan = (req, res) => {
   const { user_id, tinggiBadan, beratBadan, penyakitMenular, penyakitNonMenular, golonganDarah, kesehatanMental, butaWarna, perokok } = req.body;
