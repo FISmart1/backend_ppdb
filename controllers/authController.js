@@ -3,6 +3,11 @@ const db = require('../db');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const crypto = require('crypto');
+const axios = require('axios');
+
+const mailtrap = require('../config/mailtrap');
+
 exports.register = (req, res) => {
   console.log("REQ BODY:", req.body);
 
@@ -101,14 +106,6 @@ exports.loginAdmin = (req, res) => {
     });
   });
 };
-
-const db = require('../db');
-const bcrypt = require('bcryptjs');
-const crypto = require('crypto');
-const axios = require('axios');
-
-const mailtrap = require('../config/mailtrap');
-
 // ==============================
 // 1️⃣ REQUEST RESET PASSWORD
 // ==============================
