@@ -114,6 +114,8 @@ const mailtrap = require('../config/mailtrap');
 // ==============================
 exports.requestResetPassword = (req, res) => {
   let { email } = req.body;
+  console.log('🔥 RESET PASSWORD HIT 🔥');
+  console.log('EMAIL DARI FRONTEND:', req.body.email);
 
   if (!email) {
     return res.status(400).json({ message: 'Email wajib diisi' });
