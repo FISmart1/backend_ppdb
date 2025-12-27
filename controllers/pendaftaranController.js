@@ -2,31 +2,11 @@ const db = require('../db');
 
 exports.simpanFormPribadi = (req, res) => {
   const {
-    user_id,
-    fullName,
-    nisn,
-    nik,
-    birthPlace,
-    birthDate,
-    province,
-    city,
-    district,
-    village,
-    addressDetail,
-    rt,
-    rw,
-    postalCode,
-    schoolOrigin,
-    graduationYear,
-    npsn,
-    childOrder,
-    parentStatus,
-    familyStatus,
-    socialAid,
-    livingWith,
-    livingWithCustom,
-    phone,
-    socialMedia,
+    user_id, fullName, nisn, nik, birthPlace, birthDate,
+    province, city, district, village, addressDetail, rt, rw, postalCode,
+    schoolOrigin, graduationYear, npsn,
+    childOrder, parentStatus, familyStatus, socialAid,
+    livingWith, livingWithCustom, phone, socialMedia,
   } = req.body;
 
   if (!user_id) {
@@ -38,37 +18,42 @@ exports.simpanFormPribadi = (req, res) => {
       user_id, fullName, nisn, nik, birthPlace, birthDate,
       province, city, district, village, addressDetail, rt, rw, postalCode,
       schoolOrigin, graduationYear, npsn,
-      childOrder, parentStatus, familyStatus, socialAid, livingWith, livingWithCustom,
-      phone, socialMedia
+      childOrder, parentStatus, familyStatus, socialAid,
+      livingWith, livingWithCustom, phone, socialMedia
     ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, ?,?)
+    ON DUPLICATE KEY UPDATE
+      fullName = VALUES(fullName),
+      nisn = VALUES(nisn),
+      nik = VALUES(nik),
+      birthPlace = VALUES(birthPlace),
+      birthDate = VALUES(birthDate),
+      province = VALUES(province),
+      city = VALUES(city),
+      district = VALUES(district),
+      village = VALUES(village),
+      addressDetail = VALUES(addressDetail),
+      rt = VALUES(rt),
+      rw = VALUES(rw),
+      postalCode = VALUES(postalCode),
+      schoolOrigin = VALUES(schoolOrigin),
+      graduationYear = VALUES(graduationYear),
+      npsn = VALUES(npsn),
+      childOrder = VALUES(childOrder),
+      parentStatus = VALUES(parentStatus),
+      familyStatus = VALUES(familyStatus),
+      socialAid = VALUES(socialAid),
+      livingWith = VALUES(livingWith),
+      livingWithCustom = VALUES(livingWithCustom),
+      phone = VALUES(phone),
+      socialMedia = VALUES(socialMedia)
   `;
 
   const values = [
-    user_id,
-    fullName,
-    nisn,
-    nik,
-    birthPlace,
-    birthDate,
-    province,
-    city,
-    district,
-    village,
-    addressDetail,
-    rt,
-    rw,
-    postalCode,
-    schoolOrigin,
-    graduationYear,
-    npsn,
-    childOrder,
-    parentStatus,
-    familyStatus,
-    socialAid,
-    livingWith,
-    livingWithCustom,
-    phone,
-    socialMedia,
+    user_id, fullName, nisn, nik, birthPlace, birthDate,
+    province, city, district, village, addressDetail, rt, rw, postalCode,
+    schoolOrigin, graduationYear, npsn,
+    childOrder, parentStatus, familyStatus, socialAid,
+    livingWith, livingWithCustom, phone, socialMedia,
   ];
 
   db.query(sql, values, (err) => {
@@ -77,12 +62,18 @@ exports.simpanFormPribadi = (req, res) => {
       return res.status(500).json({ message: 'Gagal menyimpan data!' });
     }
 
-    res.json({ message: 'Form pribadi berhasil disimpan!' });
+    res.json({ message: 'Form pribadi berhasil disimpan / diperbarui!' });
   });
 };
 
+
 exports.simpanFormPrestasi = (req, res) => {
-  const { user_id, math, indo, english, ipa, pai, foreignLanguage, hafalan, achievement, organization, dream, hobby, special } = req.body;
+  const {
+    user_id,
+    math, indo, english, ipa, pai,
+    foreignLanguage, hafalan,
+    achievement, organization, dream, hobby, special
+  } = req.body;
 
   if (!user_id) {
     return res.status(400).json({ message: 'user_id wajib dikirim!' });
@@ -100,9 +91,36 @@ exports.simpanFormPrestasi = (req, res) => {
       achievement, organization,
       dream, hobby, special
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ON DUPLICATE KEY UPDATE
+      math_s3 = VALUES(math_s3),
+      math_s4 = VALUES(math_s4),
+      indo_s3 = VALUES(indo_s3),
+      indo_s4 = VALUES(indo_s4),
+      english_s3 = VALUES(english_s3),
+      english_s4 = VALUES(english_s4),
+      ipa_s3 = VALUES(ipa_s3),
+      ipa_s4 = VALUES(ipa_s4),
+      pai_s3 = VALUES(pai_s3),
+      pai_s4 = VALUES(pai_s4),
+      foreignLanguage = VALUES(foreignLanguage),
+      hafalan = VALUES(hafalan),
+      achievement = VALUES(achievement),
+      organization = VALUES(organization),
+      dream = VALUES(dream),
+      hobby = VALUES(hobby),
+      special = VALUES(special)
   `;
 
-  const values = [user_id, math.s3, math.s4, indo.s3, indo.s4, english.s3, english.s4, ipa.s3, ipa.s4, pai.s3, pai.s4, foreignLanguage, hafalan, achievement, organization, dream, hobby, special];
+  const values = [
+    user_id,
+    math.s3, math.s4,
+    indo.s3, indo.s4,
+    english.s3, english.s4,
+    ipa.s3, ipa.s4,
+    pai.s3, pai.s4,
+    foreignLanguage, hafalan,
+    achievement, organization, dream, hobby, special
+  ];
 
   db.query(sql, values, (err) => {
     if (err) {
@@ -110,9 +128,10 @@ exports.simpanFormPrestasi = (req, res) => {
       return res.status(500).json({ message: 'Gagal menyimpan data prestasi!' });
     }
 
-    res.json({ message: 'Form prestasi berhasil disimpan!' });
+    res.json({ message: 'Form prestasi berhasil disimpan / diperbarui!' });
   });
 };
+
 
 exports.simpanFormOrangTua = (req, res) => {
   const {
