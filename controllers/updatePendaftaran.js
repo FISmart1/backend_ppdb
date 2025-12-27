@@ -9,6 +9,8 @@ exports.updateFormPribadi = (req, res) => {
 
   delete fields.user_id;
   delete fields.created_at;
+  delete fields.id;
+
 
   const sql = `
     UPDATE form_pribadi SET ?
