@@ -113,6 +113,7 @@ exports.updateFormRumah = (req, res) => {
   // Field tidak boleh di-update
   delete fields.user_id;
   delete fields.created_at;
+  delete fields.id;
 
   const sql = `
     UPDATE form_rumah SET ?
