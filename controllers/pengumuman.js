@@ -4,7 +4,9 @@ exports.getAllPengumuman = (req, res) => {
   const sql = `
     SELECT 
       ps.user_id,
-      u.name,
+      fp.fullName,
+      fp.nisn,
+      u.name as user_name,
       ps.seleksi_berkas,
       ps.tes_akademik,
       ps.tes_psikotes,
@@ -14,25 +16,18 @@ exports.getAllPengumuman = (req, res) => {
       ps.pengumuman_akhir
     FROM pengumuman_seleksi ps
     LEFT JOIN users u ON ps.user_id = u.id
+    LEFT JOIN form_pribadi fp ON ps.user_id = fp.user_id
   `;
-
-  console.log("SQL:", sql); // supaya jelas
 
   db.query(sql, (err, results) => {
     if (err) {
-      console.error("❌ SQL ERROR:", err.sqlMessage);
-      console.error("❌ CODE:", err.code);
-      return res.status(500).json({ message: "SQL error", error: err });
+      console.error("SQL ERROR:", err);
+      return res.status(500).json(err);
     }
-
-    console.log("Hasil:", results); // lihat hasil
 
     res.json(results);
   });
 };
-
-
-
 
 exports.getPengumuman = (req, res) => {
   const user_id = req.params.user_id;
